@@ -1,0 +1,207 @@
+{
+  "main": {
+    "id": "967f47bf60027c83",
+    "type": "split",
+    "children": [
+      {
+        "id": "529f98f60cf75894",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fa77ffe37e3d2011",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Easy/Windows/Eighteen.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Eighteen"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "649cfb52976ad6e3",
+    "type": "split",
+    "children": [
+      {
+        "id": "5f6a7ba78b9d6e78",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1343f096e96800a0",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "d20e31261d431ec8",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "e75f40fb5cafc7fa",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "770761520697bd26",
+    "type": "split",
+    "children": [
+      {
+        "id": "8dc6287de54138b8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "91561a4dcb371947",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Easy/Linux/Kobold.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Kobold"
+            }
+          },
+          {
+            "id": "47b0f50272eed66f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Easy/Linux/Kobold.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Kobold"
+            }
+          },
+          {
+            "id": "e118706e6225c1ba",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "63d1b28d8b61ad73",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "c27503e75a97c94c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Easy/Linux/Kobold.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Kobold"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "fa77ffe37e3d2011",
+  "lastOpenFiles": [
+    "Pasted image 20260410210800.png",
+    "Pasted image 20260410202031.png",
+    "Pasted image 20260410201213.png",
+    "Easy/Linux/Kobold.md",
+    "Easy/Windows/Eighteen.md",
+    "Pasted image 20260410200958.png",
+    "Easy/Windows",
+    "Images/Pasted image 20260410174214.png",
+    "Images/Pasted image 20260410105519.png",
+    "Images/Pasted image 20260410105427.png",
+    "Images/Pasted image 20260410104210.png",
+    "Images/Pasted image 20260408194840.png",
+    "Pasted image 20260408194658.png",
+    "Images/Pasted image 20260408193625.png",
+    "Images",
+    "Welcome.md",
+    "Easy/Linux",
+    "Easy"
+  ]
+}
