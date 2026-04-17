@@ -252,4 +252,4 @@ docker run -v /:/mnt --rm -it mysql:latest chroot /mnt sh
 
 ![[Pasted image 20260410174214.png]]
 
-
+# Maquina finalizada

