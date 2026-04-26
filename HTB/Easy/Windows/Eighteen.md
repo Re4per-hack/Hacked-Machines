@@ -1,4 +1,4 @@
-
+Level: Easy
 OS: Windows 
 
 # Enumeración
@@ -316,14 +316,53 @@ vemos que nos genera un archivo .zip, nos lo descargamos con la función downloa
 
 Ahora vamos a bloodhound y lo subimos.
 
-Analizando Bloodhound no encontramos nada de alto valor, por lo que hacemos una enumeración con BloodyAD:
+Analizando Bloodhound no encontramos nada de alto valor, por lo que hacemos una enumeración con BloodyAD, pero, como el puerto de LDAP no está expuesto, es mejor usar chisel, para tunelizar la conexion y así llegar hasta el puerto interno de LDAP:
+
+### Nos ponemos a la escucha con chisel en la maquina atacante
+
+```python
+sudo chisel server --reverse -p 4444
+```
+
+# Mandamos la conexion con chisel desde la maquina victima
+
+![[Pasted image 20260419135211.png]]
+
+Vemos que nos llega efectivamente la conexión:
+
+![[Pasted image 20260419135238.png]]
+
+Ahora podemos hacer la enumeración con bloodyAD:
+
+![[Pasted image 20260419135345.png]]
+
+Vemos que tenemos permisos CREATE_CHILD  lo cual nos puede permitir crear un hijo (Cualquier tipo de clase de objeto), bajo la OU (Organization Unit) Staff, esto porque me llama la antención?
+
+En versiones recientes de AD, salió Windows Server 2025, en estas nuevas versiones hay una nueva clase de objeto llamada dMSA (Delegated Managed Service Account), la existencia de esta clase de objeto, mas el CREATE_CHILD desencadena en una vulnerabilidad de tipo BadSuccessor (mas info en Mi_Camino Repository).
 
 
+Primero debemos crear esta cuenta maliciosa apuntando al Administator, para esto podemos usar la herramienta BadSuccessor.ps1:
+
+![[Pasted image 20260419140441.png]]
+
+Ahora, con la cuenta creada, podemos solicitar un  TS usando la herramienta de impacket `getTS.py`, impersonando a la cuenta dMSA que creamos anteriormente:
+
+![[Pasted image 20260419142455.png]]
+
+Ahora tenemos un archivo ccache, el cual contiene el TS, solo es cuestion de guardar la ruta hacia este archivo en la variable `KRB5CCNAME`, y ahora, podemos  hacer un DCsync usando el ticket privilegiado que conseguimos:
+
+![[Pasted image 20260419143014.png]]
+
+Por ultimo podemos usar el hash NTLM para hacer un PTH (Pass The Hash) y entrar en el sistema como administrador usando evil-winrm:
+
+![[Pasted image 20260419143244.png]]
+
+# Maquina finalizada, Aprendizajes:
 
 
-
-
-
+1. Aprendizaje y diferenciación de esquemas (OU, DN, CN, etc)
+2. Vulnerabilidad BadSuccesor
+3. 
 
 
 
