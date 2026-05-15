@@ -338,4 +338,8 @@ Esto lo solucioné sincronizando la hora de mi maquina con la del DC:
 sudo timedatectl set-ntp off
 ```
 
+![[Pasted image 20260512161953.png]]
+
+# Maquina completa
+
 
