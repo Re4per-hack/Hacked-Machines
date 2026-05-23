@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Easy/Windows/Support.md",
+                "file": "Easy/Linux/CCTV.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Support"
+              "title": "CCTV"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "net use ",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -185,9 +185,12 @@
   },
   "active": "fa77ffe37e3d2011",
   "lastOpenFiles": [
-    "Pasted image 20260512161953.png",
-    "Easy/Windows/Eighteen.md",
     "Easy/Windows/Support.md",
+    "Easy/Linux/Facts.md",
+    "Easy/Linux/Kobold.md",
+    "Easy/Windows/Eighteen.md",
+    "Pasted image 20260512161953.png",
+    "Easy/Linux/CCTV.md",
     "Images/Pasted image 20260512082548.png",
     "Images/Pasted image 20260512082953.png",
     "Images/Pasted image 20260508153715.png",
@@ -197,9 +200,6 @@
     "Images/Pasted image 20260510195859.png",
     "Images/Pasted image 20260510182936.png",
     "Images/Pasted image 20260509095130.png",
-    "Images/Pasted image 20260509093952.png",
-    "Easy/Linux/CCTV.md",
-    "Easy/Linux/Kobold.md",
     "().md",
     "Easy/Windows",
     "Images",
