@@ -1,0 +1,206 @@
+{
+  "main": {
+    "id": "9624f535198359a3",
+    "type": "split",
+    "children": [
+      {
+        "id": "c0512c86f97fa8eb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0c56a48907082a0c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "HTB/Easy/Windows/Support.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Support"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6e490cf01d86eaa1",
+    "type": "split",
+    "children": [
+      {
+        "id": "5412c2560dc9c5d6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "080e312bcc3b9940",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "b7c3d775656ca5a2",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "c9a1db1043361bbf",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "afdae10b4e8d54da",
+    "type": "split",
+    "children": [
+      {
+        "id": "63e4e732322e0c07",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0c64321190204e0e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "HTB/Easy/Linux/Facts.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Facts"
+            }
+          },
+          {
+            "id": "1b97f7c346122dc6",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "HTB/Easy/Linux/Facts.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Facts"
+            }
+          },
+          {
+            "id": "e3de4aac85b5c96e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "577f5898bacf0507",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "b3c861f576cc1167",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "HTB/Easy/Linux/Facts.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Facts"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "0c56a48907082a0c",
+  "lastOpenFiles": [
+    "HTB/Easy/Windows/Eighteen.md",
+    "HTB/Easy/Linux/Kobold.md",
+    "HTB/Easy/Linux/Facts.md",
+    "HTB/Easy/Linux/CCTV.md",
+    "HTB/Images/Pasted image 20260524145050.png",
+    "HTB/Images/Pasted image 20260524185017.png",
+    "HTB/Images/Pasted image 20260524184527.png",
+    "HTB/Images/Pasted image 20260524184329.png",
+    "HTB/Images/Pasted image 20260524152113.png",
+    "HTB/Images/Pasted image 20260524151805.png",
+    "HTB/Images/Pasted image 20260524151705.png",
+    "HTB/Images/Pasted image 20260524151630.png",
+    "HTB/Images/Pasted image 20260524145300.png",
+    "HTB/Images/Pasted image 20260524145238.png",
+    "HTB/Easy/Linux/Untitled/Untitled",
+    "HTB/Easy/Linux/Untitled",
+    "HTB/Easy/Windows/Support.md"
+  ]
+}
