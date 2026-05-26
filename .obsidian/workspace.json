@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "HTB/Easy/Windows/Support.md",
+                "file": "HTB/Easy/Windows/MonitorsFour.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Support"
+              "title": "MonitorsFour"
             }
           }
         ]
@@ -186,21 +186,23 @@
   "active": "0c56a48907082a0c",
   "lastOpenFiles": [
     "HTB/Easy/Windows/Eighteen.md",
+    "HTB/Easy/Windows/MonitorsFour.md",
+    "HTB/Easy/Windows/Support.md",
+    "Pasted image 20260525000340.png",
+    "Pasted image 20260525010456.png",
+    "Pasted image 20260525005840.png",
+    "Pasted image 20260525000646.png",
+    "HTB/Images/Pasted image 20260524234452.png",
+    "HTB/Images/Pasted image 20260524235823.png",
+    "HTB/Images/Pasted image 20260524235252.png",
+    "HTB/Images/Pasted image 20260524235215.png",
+    "HTB/Images/Pasted image 20260524234515.png",
+    "HTB/Images/Pasted image 20260524234513.png",
     "HTB/Easy/Linux/Kobold.md",
+    "HTB/Easy/Windows/Untitled.md",
     "HTB/Easy/Linux/Facts.md",
     "HTB/Easy/Linux/CCTV.md",
-    "HTB/Images/Pasted image 20260524145050.png",
-    "HTB/Images/Pasted image 20260524185017.png",
-    "HTB/Images/Pasted image 20260524184527.png",
-    "HTB/Images/Pasted image 20260524184329.png",
-    "HTB/Images/Pasted image 20260524152113.png",
-    "HTB/Images/Pasted image 20260524151805.png",
-    "HTB/Images/Pasted image 20260524151705.png",
-    "HTB/Images/Pasted image 20260524151630.png",
-    "HTB/Images/Pasted image 20260524145300.png",
-    "HTB/Images/Pasted image 20260524145238.png",
     "HTB/Easy/Linux/Untitled/Untitled",
-    "HTB/Easy/Linux/Untitled",
-    "HTB/Easy/Windows/Support.md"
+    "HTB/Easy/Linux/Untitled"
   ]
 }

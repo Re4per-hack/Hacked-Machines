@@ -226,3 +226,37 @@ Perfecto, ahora podemos intentar conectarnos por ssh, vemos que cuando intentamo
 
 Lo mejor que podemos hacer en este caso es extraer un hash basado en el passprhase para romper la contraseña de la llave privada protegida:
 
+![[Pasted image 20260524190937.png]]
+
+Ahora si, podemos crackearlo con john, lo que nos da la siguiente contraseña:
+
+![[Pasted image 20260524191047.png]]
+
+Listo!, Ahora podemos conectarnos a ssh usando la lalve privada y proporcionando el passphrase ***`dragonballz`***:
+
+![[Pasted image 20260524191227.png]]
+
+Vemos que podemos ejecutar **`/usr/bin/facter`** como root usando root:
+
+![[Pasted image 20260524191259.png]]
+
+Busque facter en nuestro viejo confiable [GTFOBins](https://gtfobins.org/gtfobins/facter/):
+
+![[Pasted image 20260524193704.png]]
+
+Como dice GTFOBins, facter va a ejecutar el primer archivo .rb que encuentre en la ruta especificada, y como lo estamos ejecutando con sudo, el codigo ruby se va a ejecutar con permisos administrativos (root), por lo que nos conviene usar una reverse shell de ruby ej: [Aqui](https://github.com/secjohn/ruby-shells/blob/master/revshell.rb):
+
+![[Pasted image 20260524230147.png]]
+
+Ahora hacemos que facter lo ejecute:
+
+![[Pasted image 20260524230737.png]]
+
+![[Pasted image 20260524230822.png]]
+
+
+# Maquina Completa
+
+
+
+
