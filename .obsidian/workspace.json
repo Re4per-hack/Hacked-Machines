@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "HTB/Easy/Windows/MonitorsFour.md",
+                "file": "HTB/Easy/Windows/Forest.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "MonitorsFour"
+              "title": "Forest"
             }
           }
         ]
@@ -74,7 +74,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -183,24 +184,28 @@
       "bases:Create new base": false
     }
   },
-  "active": "0c56a48907082a0c",
+  "active": "b7c3d775656ca5a2",
   "lastOpenFiles": [
     "HTB/Easy/Windows/Eighteen.md",
+    "HTB/Easy/Windows/Forest.md",
+    "HTB/Easy/Forest.md",
+    "HTB/Forest.md",
+    "Forest.md",
     "HTB/Easy/Windows/MonitorsFour.md",
     "HTB/Easy/Windows/Support.md",
-    "Pasted image 20260525000340.png",
-    "Pasted image 20260525010456.png",
-    "Pasted image 20260525005840.png",
-    "Pasted image 20260525000646.png",
+    "HTB/Easy/Linux/Facts.md",
+    "HTB/Images/Pasted image 20260526003610.png",
+    "HTB/Images/Pasted image 20260526003359.png",
+    "HTB/Images/Pasted image 20260526003326.png",
+    "HTB/Images/Pasted image 20260526000656.png",
+    "HTB/Images/Pasted image 20260525234134.png",
+    "HTB/Images/Pasted image 20260525000340.png",
+    "HTB/Images/Pasted image 20260525010456.png",
+    "HTB/Images/Pasted image 20260525005840.png",
+    "HTB/Images/Pasted image 20260525000646.png",
     "HTB/Images/Pasted image 20260524234452.png",
-    "HTB/Images/Pasted image 20260524235823.png",
-    "HTB/Images/Pasted image 20260524235252.png",
-    "HTB/Images/Pasted image 20260524235215.png",
-    "HTB/Images/Pasted image 20260524234515.png",
-    "HTB/Images/Pasted image 20260524234513.png",
     "HTB/Easy/Linux/Kobold.md",
     "HTB/Easy/Windows/Untitled.md",
-    "HTB/Easy/Linux/Facts.md",
     "HTB/Easy/Linux/CCTV.md",
     "HTB/Easy/Linux/Untitled/Untitled",
     "HTB/Easy/Linux/Untitled"
