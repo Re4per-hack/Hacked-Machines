@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Easy/Linux/CCTV.md",
+                "file": "Hard/Windows/Flight.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CCTV"
+              "title": "Flight"
             }
           }
         ]
@@ -186,11 +186,14 @@
   "active": "fa77ffe37e3d2011",
   "lastOpenFiles": [
     "Easy/Windows/Support.md",
-    "Easy/Linux/Facts.md",
-    "Easy/Linux/Kobold.md",
     "Easy/Windows/Eighteen.md",
-    "Pasted image 20260512161953.png",
+    "Easy/Linux/Kobold.md",
+    "Easy/Linux/Facts.md",
     "Easy/Linux/CCTV.md",
+    "Hard/Windows/Flight.md",
+    "Hard/Windows/Flight.md",
+    "Hard/Windows",
+    "Pasted image 20260512161953.png",
     "Images/Pasted image 20260512082548.png",
     "Images/Pasted image 20260512082953.png",
     "Images/Pasted image 20260508153715.png",
