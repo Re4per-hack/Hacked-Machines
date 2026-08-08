@@ -4,7 +4,7 @@ author: "Juan Pablo Ortega García"
 
 # Leave baseurl empty if the repo is published as <user>.github.io
 # If published as <user>.github.io/htb-writeups, set: baseurl: "/htb-writeups"
-baseurl: ""
+baseurl: "/Hacked-Machines"
 url: ""
 
 markdown: kramdown
