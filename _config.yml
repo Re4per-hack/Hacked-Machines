@@ -1,0 +1,20 @@
+title: "Re4per-hack · HTB Writeups"
+description: "Hack The Box machine writeups — recon, exploitation and privesc, explained."
+author: "Juan Pablo Ortega García"
+
+# Leave baseurl empty if the repo is published as <user>.github.io
+# If published as <user>.github.io/htb-writeups, set: baseurl: "/htb-writeups"
+baseurl: ""
+url: ""
+
+markdown: kramdown
+highlighter: rouge
+
+# Don't process these with Jekyll
+exclude:
+  - build.py
+  - Easy
+  - Medium
+  - Hard
+  - Images
+  - README.md

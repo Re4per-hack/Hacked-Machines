@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{ page.title | default: site.title }}</title>
+<meta name="description" content="{{ site.description }}" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0B0E14; --surface:#121722; --line:#232B3B;
+    --text:#E6E9EF; --muted:#8A93A6; --accent:#F0453E; --green:#3ECf8E;
+    --mono:'JetBrains Mono',monospace; --sans:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px}
+  header.site{border-bottom:1px solid var(--line);padding:22px 0;position:sticky;top:0;background:rgba(11,14,20,.9);backdrop-filter:blur(8px);z-index:10}
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-family:var(--mono);font-weight:700;font-size:17px}
+  .brand a{color:var(--text)}
+  .brand span{color:var(--accent)}
+  nav a{font-family:var(--mono);font-size:13px;color:var(--muted);margin-left:20px}
+  main{padding:48px 0 80px}
+  footer.site{border-top:1px solid var(--line);padding:24px 0;text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  /* writeup content */
+  .content h1{font-size:30px;margin:36px 0 16px;letter-spacing:-.02em}
+  .content h2{font-size:23px;margin:32px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .content h3{font-size:18px;margin:26px 0 12px;color:var(--muted)}
+  .content p{margin:14px 0}
+  .content img{max-width:100%;border:1px solid var(--line);border-radius:8px;margin:18px 0;display:block}
+  .content pre{background:#070910;border:1px solid var(--line);border-radius:8px;padding:16px;overflow-x:auto;margin:18px 0}
+  .content code{font-family:var(--mono);font-size:13.5px}
+  .content pre code{color:#c9d1e0}
+  .content :not(pre)>code{background:var(--surface);color:var(--accent);padding:2px 6px;border-radius:4px;font-size:13px}
+  .content ul,.content ol{margin:14px 0 14px 24px}
+</style>
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <div class="brand"><a href="{{ site.baseurl }}/">re4per<span>_</span></a></div>
+      <nav><a href="{{ site.baseurl }}/">machines</a></nav>
+    </div>
+  </header>
+  <main><div class="wrap">{{ content }}</div></main>
+  <footer class="site"><div class="wrap">Juan Pablo Ortega García · re4per-hack · HTB writeups</div></footer>
+</body>
+</html>

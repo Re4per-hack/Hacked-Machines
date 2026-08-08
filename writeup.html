@@ -1,0 +1,11 @@
+---
+layout: default
+---
+<article class="content">
+  <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:8px">
+    <span style="color:var(--accent)">{{ page.difficulty }}</span> · {{ page.os }}
+  </div>
+  <h1 style="margin-top:0">{{ page.title }}</h1>
+  {{ content }}
+  <p style="margin-top:48px"><a href="{{ site.baseurl }}/">← back to all machines</a></p>
+</article>
