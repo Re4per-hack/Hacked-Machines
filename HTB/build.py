@@ -22,8 +22,14 @@ import urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+# --- Configuration -------------------------------------------------------
+# Where your writeups live. If your difficulty folders (Easy/, Hard/...) are
+# directly in the repo root, set: CONTENT_DIR = ROOT
+# If they live inside a subfolder like HTB/, set: CONTENT_DIR = ROOT / "HTB"
+CONTENT_DIR = ROOT / "HTB"
+
 SOURCE_DIRS = ["Easy", "Medium", "Hard"]        # difficulty folders
-IMAGES_SRC = ROOT / "Images"                    # where Obsidian dumps images
+IMAGES_SRC = CONTENT_DIR / "Images"             # where Obsidian dumps images
 POSTS_OUT = ROOT / "_posts"
 IMAGES_OUT = ROOT / "assets" / "images"
 
@@ -34,8 +40,8 @@ WIKILINK_RE = re.compile(r"\[\[([^\]|]+?)\]\]")
 
 
 def web_image_path(filename: str) -> str:
-    """Turn an image filename into a web-safe /assets/images/ URL."""
-    return "/assets/images/" + urllib.parse.quote(filename.strip())
+    encoded = urllib.parse.quote(filename.strip())
+    return "{{ '/assets/images/" + encoded + "' | relative_url }}"
 
 
 def convert_body(text: str) -> str:
@@ -69,7 +75,7 @@ def build() -> None:
 
     count = 0
     for diff in SOURCE_DIRS:
-        diff_dir = ROOT / diff
+        diff_dir = CONTENT_DIR / diff
         if not diff_dir.exists():
             continue
         for os_dir in diff_dir.iterdir():
