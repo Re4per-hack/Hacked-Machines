@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Hard/Windows/Flight.md",
+                "file": "Easy/Windows/Forest.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Flight"
+              "title": "Forest"
             }
           }
         ]
@@ -41,10 +41,12 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "Explorador de archivos"
             }
           },
           {
@@ -53,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "net use ",
+                "query": "chisel",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -61,7 +63,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "Buscar"
             }
           },
           {
@@ -174,35 +176,40 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false
     }
   },
   "active": "fa77ffe37e3d2011",
   "lastOpenFiles": [
+    "Easy/Linux/CCTV.md",
+    "Images/Captura de pantalla 2026-08-10 a las 9.22.42 p. m..png",
     "Easy/Windows/Support.md",
+    "Easy/Linux/Support.md",
+    "Easy/Linux/MonitorsFour.md",
+    "Easy/Linux/Forest.md",
+    "Easy/Linux/Eighteen.md",
+    "Easy/Windows/MonitorsFour.md",
+    "Easy/Windows/Forest.md",
     "Easy/Windows/Eighteen.md",
     "Easy/Linux/Kobold.md",
     "Easy/Linux/Facts.md",
-    "Easy/Linux/CCTV.md",
     "Hard/Windows/Flight.md",
-    "Hard/Windows/Flight.md",
+    "Images/Captura de pantalla 2026-08-10 a las 9.25.52 p. m..png",
+    "Images/Captura de pantalla 2026-08-10 a las 9.24.16 p. m..png",
+    "Images/Captura de pantalla 2026-08-10 a las 9.23.50 p. m..png",
+    "Images/Captura de pantalla 2026-08-10 a las 9.16.05 p. m..png",
+    "Images/Captura de pantalla 2026-08-10 a las 9.17.43 p. m..png",
+    "Images/Captura de pantalla 2026-08-10 a las 9.17.26 p. m..png",
+    "Images/Captura de pantalla 2026-08-10 a las 9.09.32 p. m..png",
+    "Images/Captura de pantalla 2026-08-10 a las 9.11.20 p. m..png",
+    "Images/Captura de pantalla 2026-08-10 a las 2.32.37 p. m..png",
     "Hard/Windows",
-    "Pasted image 20260512161953.png",
-    "Images/Pasted image 20260512082548.png",
-    "Images/Pasted image 20260512082953.png",
-    "Images/Pasted image 20260508153715.png",
-    "Images/Pasted image 20260510172521.png",
-    "Images/Pasted image 20260510143020.png",
-    "Images/Pasted image 20260510200815.png",
-    "Images/Pasted image 20260510195859.png",
-    "Images/Pasted image 20260510182936.png",
-    "Images/Pasted image 20260509095130.png",
     "().md",
     "Easy/Windows",
     "Images",
